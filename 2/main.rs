@@ -6,6 +6,7 @@ fn main() -> io::Result<()> {
     let reader = BufReader::new(file);
 		let mut horizontal_position: i32 = 0;
 		let mut depth: i32 = 0;
+		let mut aim: i32 = 0;
 
 
     for line in reader.lines() {
@@ -14,17 +15,18 @@ fn main() -> io::Result<()> {
 
 			if split.first().unwrap() == &"forward" {
 				let parsed_pos: i16 = split.last().unwrap().parse().unwrap();
-				horizontal_position += i32::from(parsed_pos)
+				horizontal_position += i32::from(parsed_pos);
+				depth += i32::from(parsed_pos) * aim;
 			}
 
 			if split.first().unwrap() == &"up" {
 				let parsed_pos: i16 = split.last().unwrap().parse().unwrap();
-				depth -= i32::from(parsed_pos)
+				aim -= i32::from(parsed_pos);
 			}
 
 			if split.first().unwrap() == &"down" {
 				let parsed_pos: i16 = split.last().unwrap().parse().unwrap();
-				depth += i32::from(parsed_pos)
+				aim += i32::from(parsed_pos);
 			}
     }
 
